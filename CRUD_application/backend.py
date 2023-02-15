@@ -5,7 +5,7 @@ mysqldb=mysql.connector.connect(
     password="",
     database="python"
 )
-mysqlcursir=mysqldb.cursor()
+mysqlcursir=mysqldb.cursor(buffered=True)
 
 #mysqlcursir.execute("create table carParts(id INT auto_increment primary key, name varchar(30),engin varchar(30),cost int)")
 
@@ -39,12 +39,26 @@ def update_data():
     mysqldb.commit()
     show_detail()
 
+def filterBySomthing():
+    fil=input("enter the world or letter: ")
+    sqlquary=f"select * from carparts where name like '{fil}%'"
+    mysqlcursir.execute(sqlquary)
+    records=mysqlcursir.fetchall()
+    print(records)
+    #mysqldb.commit()
+    
+    
+    
+    
+    
+    #    print("not found")
 
 print("1.Show carParts")
 print("2.Delete")
 print("3.Insert")
 print("4.Update")
 print("5.exit")
+print("6.filtersomthing")
 
 
 print("---------------------")
@@ -62,6 +76,8 @@ while(i==1):
         
     elif(op==4):
         update_data()
+    elif (op==6):
+        filterBySomthing()
         
     elif(op==5):
        i=2
